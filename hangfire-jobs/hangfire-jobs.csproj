@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\hangfire-jobs-database\hangfire-jobs-database.csproj" />
+    <ProjectReference Include="..\hangfire-jobs-service\hangfire-jobs-service.csproj" />
   </ItemGroup>
 
 </Project>
