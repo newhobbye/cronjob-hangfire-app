@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Data Source=C:\\Users\\Note_Samsung01\\source\\repos\\hangfire-jobs\\hangfire-jobs-database\\DatabaseFile\\localDb.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir Models --context LocalDbContext --force

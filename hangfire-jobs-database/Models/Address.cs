@@ -1,15 +1,25 @@
-﻿namespace hangfire_jobs_database.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace hangfire_jobs_database.Models;
+
+public partial class Address
 {
-    public class Address
-    {
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public string Cep { get; set; }
-        public string Street { get; set; }
-        public string Number { get; set; }
-        public string State { get; set; }
-        public string Neightborhood { get; set; }
-        public string Country { get; set; }
-        public User User { get; set; }
-    }
+    public string Id { get; set; } = null!;
+
+    public string UserId { get; set; } = null!;
+
+    public string Cep { get; set; } = null!;
+
+    public string Street { get; set; } = null!;
+
+    public string Number { get; set; } = null!;
+
+    public string State { get; set; } = null!;
+
+    public string Neightborhood { get; set; } = null!;
+
+    public string Country { get; set; } = null!;
+
+    public virtual User User { get; set; } = null!;
 }
