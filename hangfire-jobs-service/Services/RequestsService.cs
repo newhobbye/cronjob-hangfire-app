@@ -1,11 +1,12 @@
-﻿using hangfire_jobs_service.Models.Response.ViaCep;
+﻿using hangfire_jobs_service.Interfaces;
+using hangfire_jobs_service.Models.Response.ViaCep;
 using RestSharp;
 using System.Net;
 using System.Text.Json;
 
 namespace hangfire_jobs_service.Services
 {
-    public class RequestsService
+    public class RequestsService: IRequestsService
     {
 
         public async Task<ViaCepResponse> GetViaCepDataAsync(string cep)
