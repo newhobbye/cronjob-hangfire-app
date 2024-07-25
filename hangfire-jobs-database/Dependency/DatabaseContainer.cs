@@ -1,4 +1,6 @@
 ﻿using hangfire_jobs_database.Context;
+using hangfire_jobs_database.Interfaces;
+using hangfire_jobs_database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +16,7 @@ namespace hangfire_jobs_database.Dependency
             services.AddDbContext<LocalDbContext>(options =>
                 options.UseSqlite($"Data Source={dbPath}"));
 
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
