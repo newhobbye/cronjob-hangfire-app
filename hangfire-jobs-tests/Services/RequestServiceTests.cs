@@ -1,6 +1,7 @@
 ﻿using hangfire_jobs_service.Interfaces;
+using hangfire_jobs_tests.Dependency;
 
-namespace hangfire_jobs_tests.Dependency.Services
+namespace hangfire_jobs_tests.Services
 {
     public class RequestServiceTests
     {
