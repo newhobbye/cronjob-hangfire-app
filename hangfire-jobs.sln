@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hangfire-jobs", "hangfire-jobs\hangfire-jobs.csproj", "{2EF6EFCA-0AE0-4177-94E4-8FDA8B52A6D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hangfire-jobs", "hangfire-jobs\hangfire-jobs.csproj", "{2EF6EFCA-0AE0-4177-94E4-8FDA8B52A6D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hangfire-jobs-database", "hangfire-jobs-database\hangfire-jobs-database.csproj", "{A1BBFA95-CF9C-4F64-A3F3-BBD8A8A1A9F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hangfire-jobs-database", "hangfire-jobs-database\hangfire-jobs-database.csproj", "{A1BBFA95-CF9C-4F64-A3F3-BBD8A8A1A9F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hangfire-jobs-service", "hangfire-jobs-service\hangfire-jobs-service.csproj", "{4E47DE66-1E0B-4404-AC1A-A6608A2E4426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hangfire-jobs-service", "hangfire-jobs-service\hangfire-jobs-service.csproj", "{4E47DE66-1E0B-4404-AC1A-A6608A2E4426}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hangfire-jobs-tests", "hangfire-jobs-tests\hangfire-jobs-tests.csproj", "{CBC90A1C-30C9-40C6-B5C8-FAF62E8D2386}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4E47DE66-1E0B-4404-AC1A-A6608A2E4426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E47DE66-1E0B-4404-AC1A-A6608A2E4426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E47DE66-1E0B-4404-AC1A-A6608A2E4426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC90A1C-30C9-40C6-B5C8-FAF62E8D2386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC90A1C-30C9-40C6-B5C8-FAF62E8D2386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC90A1C-30C9-40C6-B5C8-FAF62E8D2386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC90A1C-30C9-40C6-B5C8-FAF62E8D2386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
