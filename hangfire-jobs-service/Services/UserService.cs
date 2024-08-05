@@ -37,10 +37,10 @@ namespace hangfire_jobs_service.Services
                 {
                     foreach (var address in user.Addresses)
                     {
-                        address.Street = null;
-                        address.State = null;
-                        address.Neightborhood = null;
-                        address.Country = null;
+                        address.Street = "";
+                        address.State = "";
+                        address.Neightborhood = "";
+                        address.Country = "";
 
                         _ = _repo.UpdateAddressByIdAsync(address.Id, address);
                     }
@@ -79,10 +79,10 @@ namespace hangfire_jobs_service.Services
 
                     if (resultViaCep is not null)
                     {
-                        addressOfId.Street = resultViaCep.Logradouro;
-                        addressOfId.Neightborhood = resultViaCep.Bairro;
-                        addressOfId.State = resultViaCep.Uf;
-                        addressOfId.Country = "Brasil";
+                        addressOfId.Street = resultViaCep.Logradouro ?? addressOfId.Street;
+                        addressOfId.Neightborhood = resultViaCep.Bairro ?? addressOfId.Neightborhood;
+                        addressOfId.State = resultViaCep.Uf ?? addressOfId.State;
+                        addressOfId.Country = resultViaCep.Logradouro is null ? "" : "Brasil";
 
                         _ = _repo.UpdateAddressByIdAsync(id, addressOfId);
                     }

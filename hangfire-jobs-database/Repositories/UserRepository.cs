@@ -9,6 +9,11 @@ namespace hangfire_jobs_database.Repositories
     {
         private readonly LocalDbContext _context;
 
+        public UserRepository(LocalDbContext context)
+        {
+            _context = context;
+        }
+
         public async Task<List<User>> GetAllAsync()
         {
             var result = await _context.Users
