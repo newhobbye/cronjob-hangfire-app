@@ -1,7 +1,6 @@
 ﻿using hangfire_jobs_database.Interfaces;
 using hangfire_jobs_database.Models;
 using hangfire_jobs_service.Interfaces;
-using System.Collections.Generic;
 
 namespace hangfire_jobs_service.Services
 {
@@ -30,7 +29,23 @@ namespace hangfire_jobs_service.Services
 
         public async Task ResetUsersForHangfireOperationAsync()
         {
+            var users = await _repo.GetAllAsync();
 
+            foreach (var user in users)
+            {
+                if(user.Addresses.Count > 0)
+                {
+                    foreach (var address in user.Addresses)
+                    {
+                        address.Street = null;
+                        address.State = null;
+                        address.Neightborhood = null;
+                        address.Country = null;
+
+                        _ = _repo.UpdateAddressByIdAsync(address.Id, address);
+                    }
+                }
+            }
         }
 
         #region[Metodos auxiliares]
