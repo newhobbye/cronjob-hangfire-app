@@ -8,17 +8,27 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using hangfire_jobs_service.Filters;
+using Hangfire.SqlServer;
 
 namespace hangfire_jobs_service.Dependency
 {
     public static class ServiceContainer
     {
-        public static void RegisterServiceContainer(IServiceCollection services)
+        public static void RegisterServiceContainer(IServiceCollection services, IConfiguration configuration)
         {
             DatabaseContainer.RegisterDatabaseContainer(services);
 
             services.AddScoped<IRequestsService, RequestsService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddHangfire(x => x
+            .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"))); //sqlite
+
+            JobStorage.Current = new SqlServerStorage(configuration.GetConnectionString("HangfireConnection"));
+
+            services.AddHangfireServer();
+
+            HangfireJobsConfiguration(services, configuration);
         }
 
         public static void RegisterServiceAppContainer(WebApplication app, IConfiguration configuration)

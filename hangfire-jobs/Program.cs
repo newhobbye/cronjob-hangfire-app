@@ -9,12 +9,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddEnvironmentVariables();
+IConfiguration configuration = new ConfigurationBuilder()
+        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory) 
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .Build();
 
-ServiceContainer.RegisterServiceContainer(builder.Services);
+ServiceContainer.RegisterServiceContainer(builder.Services, configuration);
 
 var app = builder.Build();
 

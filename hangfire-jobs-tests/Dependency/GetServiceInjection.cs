@@ -16,7 +16,7 @@ namespace hangfire_jobs_tests.Dependency
 
             serviceCollection.AddSingleton(configuration);
 
-            ServiceContainer.RegisterServiceContainer(serviceCollection); //, configuration
+            ServiceContainer.RegisterServiceContainer(serviceCollection, configuration); 
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
