@@ -27,6 +27,8 @@ if (app.Environment.IsDevelopment())
 
 ServiceContainer.RegisterServiceAppContainer(app, configuration);
 
+ServiceContainer.HangfireJobsConfiguration(builder.Services, configuration);
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

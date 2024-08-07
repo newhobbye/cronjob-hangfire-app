@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using hangfire_jobs_service.Filters;
-using Hangfire.SQLite;
+using Hangfire.MemoryStorage;
 
 namespace hangfire_jobs_service.Dependency
 {
@@ -20,18 +20,19 @@ namespace hangfire_jobs_service.Dependency
             services.AddScoped<IRequestsService, RequestsService>();
             services.AddScoped<IUserService, UserService>();
 
-            string connectionString = configuration.GetConnectionString("SqLite");
-
             services.AddHangfire(config =>
-            config.UseSQLiteStorage($@"Data Source=C:\\Users\\Note_Samsung01\\source\\repos\\hangfire-jobs\\hangfire-jobs-database\\DatabaseFile\\localDb.db"));
+                config.UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseMemoryStorage());
+
+            JobStorage.Current = new MemoryStorage();
 
             services.AddHangfireServer();
-
-            HangfireJobsConfiguration(services, configuration);
         }
 
         public static void RegisterServiceAppContainer(WebApplication app, IConfiguration configuration)
         {
+            //precisa ser chamado antes da definição dos jobs
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 Authorization = new[] { new MyAuthorizationFilter() },
@@ -39,20 +40,20 @@ namespace hangfire_jobs_service.Dependency
             });
         }
 
-        private static void HangfireJobsConfiguration(IServiceCollection services, IConfiguration configuration)
+        public static void HangfireJobsConfiguration(IServiceCollection services, IConfiguration configuration)
         {
             var serviceProvider = services.BuildServiceProvider();
 
             var userService = serviceProvider.GetRequiredService<IUserService>();
-            var recurringJobManager = serviceProvider.GetRequiredService<IRecurringJobManager>();
+            //var recurringJobManager = serviceProvider.GetRequiredService<IRecurringJobManager>();
 
-            recurringJobManager.AddOrUpdate("Criar kyc para estabelecimento homologado",
+            RecurringJob.AddOrUpdate("Verificação de endereços dos clientes",
                 () => userService.VerifyAddressesOfUsersAsync(),
-                configuration.GetValue<string>("HangfireOperationSettings:CronHourByHour"));
+                configuration.GetValue<string>("HangfireOperationSettings:CronTwoInTwoMinutes"));
 
-            recurringJobManager.AddOrUpdate("Criar kyc para estabelecimento onboarding sem kyc",
+            RecurringJob.AddOrUpdate("Resetar os endereços para operação do hangfire",
                 () => userService.ResetUsersForHangfireOperationAsync(),
-                configuration.GetValue<string>("HangfireOperationSettings:CronHourByHour"));
+                configuration.GetValue<string>("HangfireOperationSettings:CronFiveInFiveMinutes"));
 
             serviceProvider.Dispose();
         }
