@@ -4,11 +4,10 @@ using hangfire_jobs_database.Dependency;
 using hangfire_jobs_service.Interfaces;
 using hangfire_jobs_service.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using hangfire_jobs_service.Filters;
-using Hangfire.SqlServer;
+using Hangfire.SQLite;
 
 namespace hangfire_jobs_service.Dependency
 {
@@ -16,15 +15,15 @@ namespace hangfire_jobs_service.Dependency
     {
         public static void RegisterServiceContainer(IServiceCollection services, IConfiguration configuration)
         {
-            DatabaseContainer.RegisterDatabaseContainer(services);
+            DatabaseContainer.RegisterDatabaseContainer(services, configuration);
 
             services.AddScoped<IRequestsService, RequestsService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddHangfire(x => x
-            .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"))); //sqlite
+            string connectionString = configuration.GetConnectionString("SqLite");
 
-            JobStorage.Current = new SqlServerStorage(configuration.GetConnectionString("HangfireConnection"));
+            services.AddHangfire(config =>
+            config.UseSQLiteStorage($@"Data Source=C:\\Users\\Note_Samsung01\\source\\repos\\hangfire-jobs\\hangfire-jobs-database\\DatabaseFile\\localDb.db"));
 
             services.AddHangfireServer();
 
@@ -45,15 +44,15 @@ namespace hangfire_jobs_service.Dependency
             var serviceProvider = services.BuildServiceProvider();
 
             var userService = serviceProvider.GetRequiredService<IUserService>();
+            var recurringJobManager = serviceProvider.GetRequiredService<IRecurringJobManager>();
 
-            RecurringJob.AddOrUpdate("Criar kyc para estabelecimento homologado",
+            recurringJobManager.AddOrUpdate("Criar kyc para estabelecimento homologado",
                 () => userService.VerifyAddressesOfUsersAsync(),
                 configuration.GetValue<string>("HangfireOperationSettings:CronHourByHour"));
 
-            RecurringJob.AddOrUpdate("Criar kyc para estabelecimento onboarding sem kyc",
+            recurringJobManager.AddOrUpdate("Criar kyc para estabelecimento onboarding sem kyc",
                 () => userService.ResetUsersForHangfireOperationAsync(),
                 configuration.GetValue<string>("HangfireOperationSettings:CronHourByHour"));
-
 
             serviceProvider.Dispose();
         }

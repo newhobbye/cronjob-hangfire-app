@@ -25,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+ServiceContainer.RegisterServiceAppContainer(app, configuration);
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

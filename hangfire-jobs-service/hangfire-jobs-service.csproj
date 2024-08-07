@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.8.14" />
+    <PackageReference Include="Hangfire.SQLite" Version="1.4.2" />
     <PackageReference Include="RestSharp" Version="111.4.0" />
   </ItemGroup>
 

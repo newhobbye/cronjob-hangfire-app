@@ -12,7 +12,7 @@ namespace hangfire_jobs_tests.Repositories
             _userRepo = GetServiceInjection.GetService<IUserRepository>();
         }
 
-        [Fact(DisplayName = "Pegar todos os usuarios e endereços deles", Skip = "Build")]//
+        [Fact(DisplayName = "Pegar todos os usuarios e endereços deles")]// Skip = "Build"
         public async Task GetAllUsersAsync()
         {
             var result = await _userRepo.GetAllAsync();
